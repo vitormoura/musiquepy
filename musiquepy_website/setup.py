@@ -1,9 +1,9 @@
 from setuptools import find_packages, setup
 
 setup(
-    name='musiquefy-website',
+    name='musiquepy-website',
     version='1.0.0',
-    description='Musiquefy site web principal',
+    description='Musiquepy site web principal',
     author='Vitor Moura',
     author_email='mail@mail.com',
     url='https://github.com/vitormoura',
