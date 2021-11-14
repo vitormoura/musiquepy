@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask
 
 def create_app(test_config=None):
 
@@ -24,9 +24,10 @@ def create_app(test_config=None):
         pass
 
     # Blueprints
-    from routes import auth, home
+    from .routes import auth, home, accounts
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(home.bp)
+    app.register_blueprint(accounts.bp)
             
     return app    

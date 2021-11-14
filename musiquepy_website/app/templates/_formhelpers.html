@@ -1,0 +1,16 @@
+
+{% macro fc_cssclass(field, submitted) %}
+{{'' if not submitted else ( 'is-valid 'if field.errors | length == 0 else 'is-invalid')}}
+{% endmacro %}
+
+{% macro fc_value(field) %}
+{{ field.data | default('', True) }}
+{% endmacro %}
+
+{% macro fc_errors(field) %}
+<div id="{{field.name}}_feedback" class="invalid-feedback">
+    {% for err in field.errors -%}
+    <span>{{err}}</span>
+    {% endfor %}
+</div>
+{% endmacro %}

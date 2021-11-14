@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block title %} Nouveau abonnement {% endblock %} {% block
+content %}
+{% from "_formhelpers.html" import fc_cssclass, fc_value, fc_errors %}
+
+
+<form method="post" class="col-8 container" novalidate>
+  <h1 class="mb-5">Abonnement gratuit</h1>
+    
+  <div class="mb-3">
+    <label class="form-label">Quel est votre courriel?</label>
+    <input type="text" name="user_email" value="{{fc_value(form.user_email)}}" class="form-control {{fc_cssclass(form.user_email, submitted)}}" aria-describedby="user_email_feedback" />
+
+    {{ fc_errors(form.user_email) }}
+  </p>
+
+  <div class="mb-3">
+    <label class="form-label">Confirmez votre courriel</label>
+    <input class="form-control {{fc_cssclass(form.user_email_confirm, submitted)}}" type="text" name="user_email_confirm" value="{{fc_value(form.user_email_confirm)}}" aria-describedby="user_email_confirm_feedback" />
+
+    {{ fc_errors(form.user_email_confirm) }}
+  </p>
+
+  <div class="mb-3">
+    <label class="form-label">Créez un mot de passe</label>
+    <input type="password" name="user_password" value="{{fc_value(form.user_password)}}" class="form-control {{fc_cssclass(form.user_password, submitted)}}" />
+    {{ fc_errors(form.user_password) }}
+    
+    <p class="form-text">
+        Votre mot de passe doit avoir 8-20 caractères, des lettres et des chifres. Il ne doit pas avoir des espaces ou des caractères speciaux.
+    </p>    
+  </p>
+
+  <div class="mb-3">
+    <label class="form-label">Nous vous appelerons comment?</label>
+    <input type="text" name="user_nickname" value="{{fc_value(form.user_nickname)}}" class="form-control {{fc_cssclass(form.user_nickname, submitted)}}" />
+    {{ fc_errors(form.user_nickname) }}
+    <p class="form-text">Il sera affiché sur votre profil</p>
+  </p>
+
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="user_marketing_ok" {{ 'checked' if form.user_marketing_ok.data else '' }}  />
+    <label class="form-check-label" for="user_marketing_ok">
+      Partagez mes données d'enregistrement avec nos partenaires aux campagnes de marketing
+    </label>
+  </div>
+
+  <div class="text-center pt-4 mt-5 border-top">
+    <p class="small">En cliquant sur "Sign up", vous êtes d'accord avec nos <a href="#">poliques et conditions d'utilisation</a></p>
+
+    <input type="submit" value="Sign up"  class="btn btn-primary" />
+
+    <p class="mt-4">Vous avez une compte? <a href="#">Sign in</a></p>
+    </div>
+
+</form>
+
+{% endblock %}
