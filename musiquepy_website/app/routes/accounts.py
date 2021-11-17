@@ -19,7 +19,7 @@ def get_page_signup():
         form.process(ImmutableMultiDict(form_data))
         form.validate()
 
-    return render_template('signup.html', form=form, submitted=submitted)
+    return render_template('accounts/signup.html', form=form, submitted=submitted)
 
 
 @bp.route("/signup", methods=['post'])

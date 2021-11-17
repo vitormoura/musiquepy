@@ -24,10 +24,11 @@ def create_app(test_config=None):
         pass
 
     # Blueprints
-    from .routes import auth, home, accounts
+    from .routes import auth, home, accounts, catalog
     
     app.register_blueprint(auth.bp)
     app.register_blueprint(home.bp)
     app.register_blueprint(accounts.bp)
+    app.register_blueprint(catalog.bp)
             
     return app    
