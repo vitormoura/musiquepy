@@ -3,6 +3,10 @@
 {{'' if not submitted else ( 'is-valid 'if field.errors | length == 0 else 'is-invalid')}}
 {% endmacro %}
 
+{% macro fc_checked(field) %}
+{{ 'checked' if field.data else '' }}
+{% endmacro %}
+
 {% macro fc_value(field) %}
 {{ field.data | default('', True) }}
 {% endmacro %}
