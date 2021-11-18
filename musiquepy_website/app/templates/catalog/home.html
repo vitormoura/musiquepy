@@ -1,7 +1,18 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block title %}Le catalogue{% endblock %} {% block
+content %}
 
-<h1>Catalogue</h1>
+<h1 class="mb-4">Catalogue</h1>
 
-<p>à venir</p>
+<h4>Genres</h4>
+
+<ul>
+  {% for genre in genres %}
+  <li>
+    <a href="{{url_for('catalog.get_catalog_music_by_genre', id=genre.id)}}"
+      >{{genre.description}}</a
+    >
+  </li>
+  {% endfor %}
+</ul>
 
 {% endblock %}
