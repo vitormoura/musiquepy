@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %} Nouveau abonnement {% endblock %} {%
+block content %} {% from "_formhelpers.html" import fc_cssclass, fc_value,
+fc_errors, fc_checked %}
+
+<form
+  action="{{url_for('auth.post_validate_user_password')}}"
+  method="post"
+  novalidate
+  class="col-8 container"
+>
+  <h1 class="mb-5">Connexion</h1>
+
+  <div class="mb-3">
+    <label class="form-label">Nom utilisateur</label>
+    <input
+      type="text"
+      name="username"
+      value="{{fc_value(form.username)}}"
+      class="form-control {{fc_cssclass(form.username, submitted)}}"
+      aria-describedby="username_feedback"
+    />
+
+    {{ fc_errors(form.username) }}
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Mot de passe</label>
+    <input
+      type="password"
+      name="password"
+      value="{{fc_value(form.password)}}"
+      class="form-control {{fc_cssclass(form.password, submitted)}}"
+      aria-describedby="password_feedback"
+    />
+
+    {{ fc_errors(form.password) }}
+  </div>
+
+  <p><a href="#"> Mot de passe oublié ? </a></p>
+
+  <div class="pt-2">
+    <input type="submit" value="Sign up" class="btn btn-primary" />
+  </div>
+
+  <p class="mt-4">Vous n'avez pas de compte ? <a href="{{url_for('accounts.post_page_signup')}}"> Créez votre compte maintenant </a></p>
+</form>
+
+{% endblock %}
