@@ -1,6 +1,7 @@
+import logging
+
 from datetime import datetime
 from sqlite3 import Row, Connection, connect
-from app.errors import MusiquepyExistingUserError
 
 from app.models.user import User
 from app.errors import MusiquepyExistingUserError
@@ -13,6 +14,7 @@ class MusiquepyDB:
     def __init__(self, database: str) -> None:
         self._db_file = database
         self._conn = None
+        self._log = logging.getLogger(__name__)
 
     def connect(self):
         self._conn = connect(self._db_file)
@@ -35,6 +37,7 @@ class MusiquepyDB:
         result = cur.fetchone()
 
         if result is None:
+            logging.debug('user not found: %s', mail)
             return None
 
         usr = User()

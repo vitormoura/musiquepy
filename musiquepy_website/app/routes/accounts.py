@@ -1,5 +1,5 @@
 
-from flask import Blueprint, render_template, request, session, abort
+from flask import Blueprint, render_template, request, session, abort, current_app
 from flask.helpers import url_for
 from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.utils import redirect
@@ -34,6 +34,8 @@ def post_page_signup():
     usr = None
 
     if not form.validate():
+        current_app.logger.info('invalid form inputs, redirecting back to signup form')
+
         session['form_data'] = request.form.to_dict()
         return redirect(url_for('accounts.get_page_signup'))
 

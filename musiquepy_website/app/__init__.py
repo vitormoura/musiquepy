@@ -1,11 +1,16 @@
+from logging.config import dictConfig
 import os
 
 from flask import Flask
 
 def create_app(test_config=None):
 
+    # configure default logging
+    __config_logging()
+
     # create and configure the app
     app = Flask(__name__, instance_relative_config=False)
+
     app.config.from_mapping(
         SECRET_KEY='dev',
     )
@@ -25,10 +30,29 @@ def create_app(test_config=None):
 
     # Blueprints
     from .routes import auth, home, accounts, catalog
-    
+
     app.register_blueprint(auth.bp)
     app.register_blueprint(home.bp)
     app.register_blueprint(accounts.bp)
     app.register_blueprint(catalog.bp)
-            
-    return app    
+
+    return app
+
+
+def __config_logging():
+    dictConfig(
+        {
+            'version': 1,
+            'formatters': {'default': {
+                'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+            }},
+            'handlers': {'wsgi': {
+                'class': 'logging.StreamHandler',
+                'stream': 'ext://flask.logging.wsgi_errors_stream',
+                'formatter': 'default'
+            }},
+            'root': {
+                'level': 'DEBUG',
+                'handlers': ['wsgi']
+            }
+        })
