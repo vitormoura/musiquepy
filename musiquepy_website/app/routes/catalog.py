@@ -1,5 +1,5 @@
-from app.data import get_musiquepy_db
 from flask import abort, Blueprint, render_template, request, session
+from app.db import get_musiquepy_db
 
 bp = Blueprint('catalog', __name__, url_prefix='/catalog')
 

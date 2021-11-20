@@ -1,12 +1,12 @@
 import functools
-from app.data import get_musiquepy_db
-from flask import make_response
-from app.models.forms.form_login import FormLogin
 
 from flask import (
-    Blueprint, g, request, session, render_template, redirect, url_for, abort
+    Blueprint, g, request, session, render_template, redirect, url_for, abort, make_response
 )
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
+from app.forms import FormLogin
+from app.db import get_musiquepy_db
+
 
 SESSION_AUTH_USER_AUTHENTICATED = 'auth:user_authenticated'
 SESSION_AUTH_USER_ID = 'auth:user_id'

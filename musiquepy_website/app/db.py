@@ -1,9 +1,12 @@
 import logging
+import os
+
+from flask.helpers import get_root_path
 
 from datetime import datetime
 from sqlite3 import Row, Connection, connect
 
-from app.models.user import User
+from app.model import User
 from app.errors import MusiquepyExistingUserError
 
 
@@ -52,7 +55,8 @@ class MusiquepyDB:
         usr = self.get_user_by_email(email)
 
         if usr is not None:
-            raise MusiquepyExistingUserError(f"utilisateur existe déjà: {email}")
+            raise MusiquepyExistingUserError(
+                f"utilisateur existe déjà: {email}")
 
         cur = self._conn.cursor()
         cur.execute('INSERT INTO CAD_UTILISATEURS (TXT_COURRIEL, TXT_MOT_PASSE, NOM_UTILISATEUR, FLG_ACCEPTE_MARKETING, FLG_ACTIF, DTH_ENREGISTR, DTH_CONF_COURRIEL) VALUES (?, ?, ?, ?, ?, ?, ?)',
@@ -81,3 +85,10 @@ class MusiquepyDB:
         id, description = result
 
         return {'id': id, 'description': description}
+
+def get_musiquepy_db() -> MusiquepyDB:
+    """Récupère un nouvel objet MusiquepyDB"""
+
+    db_path = os.path.join(get_root_path('app'), 'musiquepy_db.sqlite')
+
+    return MusiquepyDB(db_path)
