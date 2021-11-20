@@ -2,6 +2,9 @@ from logging.config import dictConfig
 import os
 
 from flask import Flask
+from flask_session import Session
+
+sess = Session()
 
 def create_app(test_config=None):
 
@@ -10,7 +13,7 @@ def create_app(test_config=None):
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=False)
-    
+        
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
@@ -22,6 +25,9 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    # Plugins init
+    sess.init_app(app)
 
     # Blueprints
     from .routes import auth, home, accounts, catalog
