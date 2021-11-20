@@ -4,7 +4,7 @@ from flask import make_response
 from app.models.forms.form_login import FormLogin
 
 from flask import (
-    Blueprint, g, request, session, render_template, redirect, url_for
+    Blueprint, g, request, session, render_template, redirect, url_for, abort
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -35,28 +35,28 @@ def post_validate_user_password():
     user = None
 
     if not form.validate():
-        return make_response(400, str(form.errors))
+        return abort(400, str(form.errors))
 
     with get_musiquepy_db() as db:
         user = db.get_user_by_email(form.username.data)
 
         if user is None:
-            return make_response(401)
+            return abort(401)
 
     if not check_password_hash(user.password, form.password.data):
-        return make_response(401)
+        return abort(401)
 
     session[SESSION_AUTH_USER_AUTHENTICATED] = True
     session[SESSION_AUTH_USER_ID] = user.id
 
-    return make_response(200, 'ok')
+    return make_response('ok')
 
 
 @bp.post('/logout')
 def post_logout():
     session.clear()
 
-    return make_response(200, 'ok')
+    return make_response('ok')
 
 # Decorators
 
