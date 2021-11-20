@@ -6,17 +6,10 @@ from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash
 
 from app.data import get_musiquepy_db
-from ..errors import MusiquepyExistingUserError
-from ..models.form_signup import FormSignup
-from ..models.form_login import FormLogin
+from app.errors import MusiquepyExistingUserError
+from app.models.forms.form_signup import FormSignup
 
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
-
-
-@bp.get("/login")
-def get_page_login():
-    form = FormLogin()
-    return render_template('accounts/login.html', form=form, submitted=False)
 
 
 @bp.get("/signup")

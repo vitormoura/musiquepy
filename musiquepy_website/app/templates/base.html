@@ -38,7 +38,11 @@
       </main>
 
       <footer class="pt-5 my-5 text-muted border-top">
-        Équipe développement Musiquepy &middot; &copy; 2021
+        {% if not g.user_id == None %}
+          <span>(user_id = {{g.user_id}})</span>
+        {% endif %}
+        
+        Équipe développement Musiquepy &middot; &copy; 2021 
       </footer>
     </div>   
     

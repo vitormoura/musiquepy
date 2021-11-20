@@ -1,8 +1,9 @@
-{% extends 'base.html' %} {% block title %} Nouveau abonnement {% endblock %} {%
+{% extends 'base.html' %} {% block title %} Login {% endblock %} {%
 block content %} {% from "_formhelpers.html" import fc_cssclass, fc_value,
 fc_errors, fc_checked %}
 
 <form
+  id="auth-form"
   action="{{url_for('auth.post_validate_user_password')}}"
   method="post"
   novalidate
