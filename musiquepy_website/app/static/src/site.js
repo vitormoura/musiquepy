@@ -8,7 +8,7 @@ function config_btnLogout() {
   if (btnLogout) {
     btnLogout.onclick = function () {
       fetch(btnLogout.dataset.logoutUrl, { method: "post" }).then(function () {
-        document.location.href = "//";
+        document.location.href = "/";
       });
     };
   }

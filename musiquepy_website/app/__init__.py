@@ -53,6 +53,9 @@ def _init_session(app: Flask):
 def _init_assets(app: Flask):
     assets.init_app(app)
 
+    assets.auto_build = True
+    assets.debug = False
+
     style_bundle = Bundle(
         'src/*.scss',
         filters="scss,cssmin",
@@ -67,8 +70,9 @@ def _init_assets(app: Flask):
     assets.register('app_styles', style_bundle)
     assets.register('app_scripts', js_bundle)
  
-    style_bundle.build()
-    js_bundle.build()
+    if app.config['FLASK_ENV'] == 'development':
+        style_bundle.build()
+        js_bundle.build()
 
 
 def _config_logging():
