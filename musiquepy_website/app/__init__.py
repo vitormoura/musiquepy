@@ -3,9 +3,12 @@ import os
 
 from flask import Flask
 from flask_session import Session
+from flask_assets import Environment, Bundle 
 
+assets = Environment()
 sess = Session()
 
+ 
 def create_app(test_config=None):
 
     # configure default logging
@@ -13,9 +16,9 @@ def create_app(test_config=None):
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=False)
-        
+
     if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+        app.config.from_pyfile('config.py', silent=False)
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
@@ -26,18 +29,46 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # Plugins init
+    with app.app_context():
+
+        # Plugins init
+        _init_session(app)
+        _init_assets(app)
+
+        # Blueprints
+        from .routes import auth, home, accounts, catalog
+
+        app.register_blueprint(auth.bp)
+        app.register_blueprint(home.bp)
+        app.register_blueprint(accounts.bp)
+        app.register_blueprint(catalog.bp)
+
+        return app
+
+
+def _init_session(app: Flask):
     sess.init_app(app)
 
-    # Blueprints
-    from .routes import auth, home, accounts, catalog
 
-    app.register_blueprint(auth.bp)
-    app.register_blueprint(home.bp)
-    app.register_blueprint(accounts.bp)
-    app.register_blueprint(catalog.bp)
+def _init_assets(app: Flask):
+    assets.init_app(app)
 
-    return app
+    style_bundle = Bundle(
+        'src/*.scss',
+        filters="scss,cssmin",
+        output="dist/site.min.css", extra={'rel': 'stylesheet'})
+
+    js_bundle = Bundle(
+        'src/*.js',
+        filters='jsmin',
+        output='dist/site.min.js'
+    )
+
+    assets.register('app_styles', style_bundle)
+    assets.register('app_scripts', js_bundle)
+ 
+    style_bundle.build()
+    js_bundle.build()
 
 
 def _config_logging():
