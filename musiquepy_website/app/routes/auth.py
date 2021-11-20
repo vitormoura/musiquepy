@@ -1,4 +1,3 @@
-import functools
 from flask import abort, make_response
 from app.models.form_login import FormLogin
 

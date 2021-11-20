@@ -1,16 +1,22 @@
-import sqlite3
+from datetime import datetime
+from sqlite3 import Row, Connection, connect
+from app.errors import MusiquepyExistingUserError
+
+from app.models.user import User
+from app.errors import MusiquepyExistingUserError
 
 
 class MusiquepyDB:
     _db_file: str = ""
-    _conn: sqlite3.Connection = None
+    _conn: Connection = None
 
     def __init__(self, database: str) -> None:
         self._db_file = database
         self._conn = None
 
     def connect(self):
-        self._conn = sqlite3.connect(self._db_file)
+        self._conn = connect(self._db_file)
+        self._conn.row_factory = Row
 
     def close(self):
         self._conn.close()
@@ -21,6 +27,41 @@ class MusiquepyDB:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
+
+    def get_user_by_email(self, mail: str) -> User:
+        cur = self._conn.cursor()
+        cur.execute(
+            'SELECT * FROM CAD_UTILISATEURS WHERE TXT_COURRIEL = ?', [mail])
+        result = cur.fetchone()
+
+        if result is None:
+            return None
+
+        usr = User()
+        usr.mail = result['TXT_COURRIEL']
+        usr.id = result['SEQ_UTILISATEUR']
+        usr.name = result['NOM_UTILISATEUR']
+        usr.password = result['TXT_MOT_PASSE']
+
+        return usr
+
+    def create_user(self, name: str, email: str, password: str) -> User:
+        usr = self.get_user_by_email(email)
+
+        if usr is not None:
+            raise MusiquepyExistingUserError(f"utilisateur existe déjà: {email}")
+
+        cur = self._conn.cursor()
+        cur.execute('INSERT INTO CAD_UTILISATEURS (TXT_COURRIEL, TXT_MOT_PASSE, NOM_UTILISATEUR, FLG_ACCEPTE_MARKETING, FLG_ACTIF, DTH_ENREGISTR, DTH_CONF_COURRIEL) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    (email, password, name, 0, 1, datetime.now(), None))
+
+        self._conn.commit()
+
+        user = User()
+        user.name = name
+        user.mail = email
+
+        return user
 
     def get_genres(self):
         cur = self._conn.cursor()
@@ -36,4 +77,4 @@ class MusiquepyDB:
 
         id, description = result
 
-        return {'id': id, 'description': description}        
+        return {'id': id, 'description': description}
