@@ -13,7 +13,7 @@ bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 
 
 @bp.get("/signup")
-def get_page_signup():
+def page_signup():
     form = FormSignup()
     submitted = False
 
@@ -28,7 +28,7 @@ def get_page_signup():
 
 
 @bp.post("/signup")
-def post_page_signup():
+def page_signup_post():
 
     form = FormSignup(request.form)
     usr = None
@@ -37,7 +37,7 @@ def post_page_signup():
         current_app.logger.info('invalid form inputs, redirecting back to signup form')
 
         session['form_data'] = request.form.to_dict()
-        return redirect(url_for('accounts.get_page_signup'))
+        return redirect(url_for('accounts.page_signup'))
 
     try:
         with get_musiquepy_db() as db:
@@ -50,4 +50,4 @@ def post_page_signup():
     if usr is not None:
         return redirect(url_for('home.page_my_music'))
 
-    return redirect(url_for('accounts.get_page_signup'))
+    return redirect(url_for('accounts.page_signup'))

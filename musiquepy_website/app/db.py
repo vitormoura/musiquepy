@@ -73,7 +73,7 @@ class MusiquepyDB:
     
     def get_genres(self) -> List[GenericRecord]:
         cur = self._conn.cursor()
-        return [GenericRecord(id, desc) for (id, desc) in cur.execute('SELECT * FROM TAB_GENRES ORDER BY DSC_GENRE')]
+        return [GenericRecord(id, desc) for (id, desc) in cur.execute('SELECT * FROM TAB_GENRES_MUSIQ ORDER BY DSC_GENRE_MUSIQ')]
 
     def get_genre_by_id(self, id: int) -> GenericRecord:
         cur = self._conn.cursor()

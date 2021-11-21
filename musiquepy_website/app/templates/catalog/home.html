@@ -8,7 +8,7 @@ content %}
 <ul>
   {% for genre in genres %}
   <li>
-    <a href="{{url_for('catalog.get_catalog_music_by_genre', id=genre.id)}}"
+    <a href="{{url_for('catalog.page_music_by_genre', id=genre.id)}}"
       >{{genre.description}}</a
     >
   </li>
