@@ -1,3 +1,4 @@
+from app.model import MusicTracksViewModel
 from flask import abort, Blueprint, render_template, request, session
 from app.db import get_musiquepy_db
 
@@ -33,4 +34,6 @@ def get_catalog_music_by_genre(id: int):
         if genre is None:
             abort(404)
 
-        return render_template('catalog/music_by_genre.html', id=id, genre=genre)
+        tracks = db.get_music_tracks_by_genre(genre.id)
+
+        return render_template('catalog/music_by_genre.html', id=id, genre=genre, tracks=MusicTracksViewModel(tracks))

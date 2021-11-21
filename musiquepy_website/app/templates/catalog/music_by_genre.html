@@ -1,8 +1,17 @@
 {% extends 'base.html' %} {% block title %}Le genre{% endblock %} {% block
 content %}
 
-<h1 class="mb-4">{{genre.description}}</h1>
+<h1 class="mb-4">{{genre.description}} ({{ tracks.length() }})</h1>
 
 
+{% for album in tracks.get_albums() %}
+    <h2>{{album.artist.description}} - {{album.description}}</h2>
+    
+    <ul>
+        {% for track in tracks.get_tracks_by_album(album.id) %}
+            <li>{{track.name}} {{track.duration}}</li>
+        {% endfor %}
+    </ul>
+{% endfor %}
 
 {% endblock %}
