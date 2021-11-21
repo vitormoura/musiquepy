@@ -20,6 +20,22 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def load_current_user():
     g.user_id = session.get(SESSION_AUTH_USER_ID)
 
+# Decorators
+
+
+def login_required(view):
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        print('wrapped_view')
+        if g.user_id is None:
+            return redirect(url_for('auth.page_login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
 # Routes
 
 
@@ -53,22 +69,8 @@ def post_validate_user_password():
 
 
 @bp.post('/logout')
+@login_required
 def post_logout():
     session.clear()
 
     return make_response('ok')
-
-# Decorators
-
-
-def login_required(view):
-
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        print('wrapped_view')
-        if g.user_id is None:
-            return redirect(url_for('auth.page_login'))
-
-        return view(**kwargs)
-
-    return wrapped_view
