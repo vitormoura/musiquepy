@@ -17,6 +17,9 @@ setup(
     description="l'application webapi du projet musiquepy",
     long_description=long_description,
     long_description_content_type="text/markdown",
+    include_package_data=True,
+    setup_requires=['wheel'],
+    zip_safe=False,
     install_requires=[
         "pytest==6.2.5",
         "Flask==2.0.2",
