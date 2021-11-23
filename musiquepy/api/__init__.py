@@ -2,13 +2,7 @@ from logging.config import dictConfig
 import os
 
 from flask import Flask
-from flask_session import Session
-from flask_assets import Environment, Bundle 
 
-assets = Environment()
-sess = Session()
-
- 
 def create_app(test_config=None):
 
     # configure default logging
@@ -32,47 +26,12 @@ def create_app(test_config=None):
     with app.app_context():
 
         # Plugins init
-        _init_session(app)
-        _init_assets(app)
+        from musiquepy.api.routes import echo
 
         # Blueprints
-        from .routes import auth, home, accounts, catalog
-
-        app.register_blueprint(auth.bp)
-        app.register_blueprint(home.bp)
-        app.register_blueprint(accounts.bp)
-        app.register_blueprint(catalog.bp)
+        app.register_blueprint(echo.bp)
 
         return app
-
-
-def _init_session(app: Flask):
-    sess.init_app(app)
-
-
-def _init_assets(app: Flask):
-    assets.init_app(app)
-
-    assets.auto_build = True
-    assets.debug = False
-
-    style_bundle = Bundle(
-        'src/*.scss',
-        filters="scss,cssmin",
-        output="dist/site.min.css", extra={'rel': 'stylesheet'})
-
-    js_bundle = Bundle(
-        'src/*.js',
-        filters='jsmin',
-        output='dist/site.min.js'
-    )
-
-    assets.register('app_styles', style_bundle)
-    assets.register('app_scripts', js_bundle)
- 
-    if app.config['FLASK_ENV'] == 'development':
-        style_bundle.build()
-        js_bundle.build()
 
 
 def _config_logging():

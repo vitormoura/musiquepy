@@ -6,9 +6,9 @@ from flask.helpers import get_root_path
 from datetime import datetime, time, timedelta
 from sqlite3 import Row, Connection, connect
 
-from app.config import DB_FILEPATH
-from app.model import Album, GenericRecord, MusicTrack, User
-from app.errors import MusiquepyExistingUserError
+from musiquepy.website.config import DB_FILEPATH
+from musiquepy.website.model import Album, GenericRecord, MusicTrack, User
+from musiquepy.website.errors import MusiquepyExistingUserError
 
 
 class MusiquepyDB:
@@ -133,6 +133,6 @@ class MusiquepyDB:
 def get_musiquepy_db() -> MusiquepyDB:
     """Récupère un nouvel objet MusiquepyDB"""
 
-    db_path = os.path.join(get_root_path('app'), DB_FILEPATH)
+    db_path = os.path.join(get_root_path('musiquepy.website'), DB_FILEPATH)
 
     return MusiquepyDB(db_path)

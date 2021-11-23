@@ -5,9 +5,9 @@ from werkzeug.datastructures import ImmutableMultiDict
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash
 
-from app.db import get_musiquepy_db
-from app.errors import MusiquepyExistingUserError
-from app.forms import FormSignup
+from musiquepy.website.db import get_musiquepy_db
+from musiquepy.website.errors import MusiquepyExistingUserError
+from musiquepy.website.forms import FormSignup
 
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 

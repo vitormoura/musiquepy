@@ -2,12 +2,12 @@
   "files.exclude": {
     ".virtualenv": true,
     "**/*instance": true,
-    "*/**.egg-info": true,
+    "**.egg-info": true,
     "**/__pycache__": true,
     "**/.webassets*": true,
     "**/.pytest_cache": true,
     "**/.flask_session": true,
     "**/build": true,
-    
+    "bin": false
   }
 }

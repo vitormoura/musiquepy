@@ -1,5 +1,4 @@
-from logging import debug
-from app import create_app
+from musiquepy.website import create_app
 
 application = create_app()
 

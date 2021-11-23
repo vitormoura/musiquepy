@@ -4,8 +4,8 @@ from flask import (
     Blueprint, g, request, session, render_template, redirect, url_for, abort, make_response
 )
 from werkzeug.security import check_password_hash
-from app.forms import FormLogin
-from app.db import get_musiquepy_db
+from musiquepy.website.forms import FormLogin
+from musiquepy.website.db import get_musiquepy_db
 
 
 SESSION_AUTH_USER_AUTHENTICATED = 'auth:user_authenticated'
