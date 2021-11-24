@@ -1,5 +1,6 @@
 include musiquepy/website/musiquepy_db.sql
 include musiquepy/website/musiquepy_db.sqlite
+include requirements.txt
 graft musiquepy/website/static/src
 graft musiquepy/website/templates
 global-exclude *.pyc

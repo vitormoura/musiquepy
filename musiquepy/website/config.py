@@ -20,4 +20,4 @@ SESSION_FILE_DIR = '.flask_session'
 ASSETS_DEBUG = False
 ASSETS_AUTO_BUILD = True
 
-DB_FILEPATH = 'musiquepy_db.sqlite'
+DB_FILEPATH = 'musiquepy_db.sqlite' 
