@@ -2,6 +2,9 @@ from logging.config import dictConfig
 import os
 
 from flask import Flask
+from flask_cors import CORS
+
+cors = CORS()
 
 def create_app(test_config=None):
 
@@ -26,9 +29,10 @@ def create_app(test_config=None):
     with app.app_context():
 
         # Plugins init
-        from musiquepy.api.routes import echo
+        cors.init_app(app)
 
         # Blueprints
+        from musiquepy.api.routes import echo
         app.register_blueprint(echo.bp)
 
         return app
