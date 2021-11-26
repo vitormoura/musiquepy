@@ -4,7 +4,7 @@ from flask.json import jsonify
 
 from musiquepy.api.utils import json_ok
 from musiquepy.data import get_musiquepy_db
-from musiquepy.data.schemas import GenericRecordSchema
+from musiquepy.data.schemas import GenericRecordSchema, MusicTrackSchema
 
 
 bp = Blueprint('catalog', __name__, url_prefix='/catalog')
@@ -22,7 +22,7 @@ def get_music_genres():
 def get_genre_by_id(genre_id:int):
     with get_musiquepy_db() as db:
         tracks = db.get_music_tracks_by_genre(genre_id)
+        schema = MusicTrackSchema(many=True)
+        json_dump = schema.dumps(tracks)
 
-
-
-        return jsonify(tracks)
+        return json_ok(json_dump)
