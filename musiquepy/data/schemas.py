@@ -10,9 +10,9 @@ class AlbumSchema(GenericRecordSchema):
     artist = fields.Nested(GenericRecordSchema)
 
 class MusicTrackSchema(Schema):
-    id = fields.Number()
+    id = fields.Int()
     name = fields.Str()
-    order = fields.Number()
+    order = fields.Int()
     album = fields.Nested(AlbumSchema)
     artist = fields.Nested(GenericRecordSchema)
     duration = fields.TimeDelta()
