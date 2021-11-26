@@ -5,7 +5,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash
 from musiquepy.website.forms import FormLogin
-from musiquepy.website.db import get_musiquepy_db
+from musiquepy.data import get_musiquepy_db
 
 
 SESSION_AUTH_USER_AUTHENTICATED = 'auth:user_authenticated'

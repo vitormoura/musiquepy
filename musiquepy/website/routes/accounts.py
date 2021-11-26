@@ -1,13 +1,13 @@
 
-from flask import Blueprint, render_template, request, session, abort, current_app
+from flask import (Blueprint, abort, current_app, render_template, request,
+                   session)
 from flask.helpers import url_for
-from werkzeug.datastructures import ImmutableMultiDict
-from werkzeug.utils import redirect
-from werkzeug.security import generate_password_hash
-
-from musiquepy.website.db import get_musiquepy_db
-from musiquepy.website.errors import MusiquepyExistingUserError
+from musiquepy.data import get_musiquepy_db
+from musiquepy.data.errors import MusiquepyExistingUserError
 from musiquepy.website.forms import FormSignup
+from werkzeug.datastructures import ImmutableMultiDict
+from werkzeug.security import generate_password_hash
+from werkzeug.utils import redirect
 
 bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 

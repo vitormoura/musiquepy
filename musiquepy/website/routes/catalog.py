@@ -1,7 +1,7 @@
 from flask import abort, Blueprint, render_template, request, session
 
 from musiquepy.website.model import MusicTracksViewModel
-from musiquepy.website.db import get_musiquepy_db
+from musiquepy.data import get_musiquepy_db
 
 bp = Blueprint('catalog', __name__, url_prefix='/catalog')
 

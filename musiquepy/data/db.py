@@ -1,14 +1,12 @@
 import logging
 import os
 
+from datetime import datetime, timedelta
+from sqlite3 import Connection, Row, connect
 from typing import List
-from flask.helpers import get_root_path
-from datetime import datetime, time, timedelta
-from sqlite3 import Row, Connection, connect
 
-from musiquepy.website.config import DB_FILEPATH
-from musiquepy.website.model import Album, GenericRecord, MusicTrack, User
-from musiquepy.website.errors import MusiquepyExistingUserError
+from musiquepy.data.errors import MusiquepyExistingUserError
+from musiquepy.data.model import Album, GenericRecord, MusicTrack, User
 
 
 class MusiquepyDB:
@@ -70,7 +68,7 @@ class MusiquepyDB:
         usr.password = result['TXT_MOT_PASSE']
 
         return usr
-    
+
     def get_genres(self) -> List[GenericRecord]:
         cur = self._conn.cursor()
         return [GenericRecord(id, desc) for (id, desc) in cur.execute('SELECT * FROM TAB_GENRES_MUSIQ ORDER BY DSC_GENRE_MUSIQ')]
@@ -83,7 +81,7 @@ class MusiquepyDB:
         if result is None:
             return None
 
-        return GenericRecord(result['COD_GENRE_MUSIQ'], result['DSC_GENRE_MUSIQ'])        
+        return GenericRecord(result['COD_GENRE_MUSIQ'], result['DSC_GENRE_MUSIQ'])
 
     def get_music_tracks_by_genre(self, id_genre: int) -> List[MusicTrack]:
         query = """
@@ -110,7 +108,7 @@ class MusiquepyDB:
         cur = self._conn.cursor()
         result = cur.execute(query, (id_genre,))
         tracks = list()
-        
+
         for row in result:
             track = MusicTrack()
             track.id = row['SEQ_PISTE']
@@ -118,21 +116,14 @@ class MusiquepyDB:
             track.duration = timedelta(seconds=row['NUM_DURATION_SEC'])
             track.order = row['NUM_ORDRE']
 
-            track.artist = GenericRecord(row['SEQ_ARTISTE'], row['NOM_ARTISTE'])
-            
+            track.artist = GenericRecord(
+                row['SEQ_ARTISTE'], row['NOM_ARTISTE'])
+
             track.album = Album()
             track.album.id = row['SEQ_ALBUM']
             track.album.description = row['NOM_ALBUM']
-            track.album.artist = track.artist;
+            track.album.artist = track.artist
 
             tracks.append(track)
 
-        return tracks        
-
-
-def get_musiquepy_db() -> MusiquepyDB:
-    """Récupère un nouvel objet MusiquepyDB"""
-
-    db_path = os.path.join(get_root_path('musiquepy.website'), DB_FILEPATH)
-
-    return MusiquepyDB(db_path)
+        return tracks
