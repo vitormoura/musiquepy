@@ -25,4 +25,5 @@ class ArtistSchema(Schema):
     web_site = fields.Str()
     code = fields.Str()
     historique = fields.Str()
+    image_url = fields.Str(required=False)
     
