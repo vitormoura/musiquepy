@@ -6,7 +6,7 @@ from sqlite3 import Connection, Row, connect
 from typing import List
 
 from musiquepy.data.errors import MusiquepyExistingUserError
-from musiquepy.data.model import Album, GenericRecord, MusicTrack, User
+from musiquepy.data.model import Album, Artist, GenericRecord, MusicTrack, User
 
 
 class MusiquepyDB:
@@ -82,6 +82,23 @@ class MusiquepyDB:
             return None
 
         return GenericRecord(result['COD_GENRE_MUSIQ'], result['DSC_GENRE_MUSIQ'])
+
+    def get_artist_by_id(self, id: int) -> Artist:
+        cur = self._conn.cursor()
+        result = cur.execute(
+            'SELECT * FROM CAD_ARTISTES WHERE SEQ_ARTISTE = ?', [id]).fetchone()
+
+        if result is None:
+            return None
+
+        art = Artist()
+        art.id = result['SEQ_ARTISTE']
+        art.code = result['COD_ARTISTE']
+        art.name = result['NOM_ARTISTE']
+        art.web_site = result['URL_SITEWEB']
+        art.historique = result['DSC_HISTORIQUE']
+
+        return art
 
     def get_music_tracks_by_genre(self, id_genre: int) -> List[MusicTrack]:
         query = """
