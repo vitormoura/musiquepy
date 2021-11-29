@@ -4,6 +4,7 @@ from flask.json import jsonify
 
 bp = Blueprint('echo', __name__, url_prefix='/echo')
 
+
 @bp.get('/hello')
 def get_message():
     # response text/html
@@ -26,6 +27,7 @@ def post_echo_content():
 def post_session_value_set():
     session['my_secret_value'] = str(datetime.now())
     return session['my_secret_value']
+
 
 @bp.get('/session/value-get')
 def get_session_value_get():

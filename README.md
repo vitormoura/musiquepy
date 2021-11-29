@@ -4,21 +4,20 @@ Projet labo pour explorer le développement des applications web python en utili
 
 ## Des fonctionnalités à explorer
 
-- [ ] Configuration des nouveux environnements
-- [ ] Struture des projets Python et Flask
-- [ ] Contenu dynamique `text/html` (pages web en utilisant de templates)
-- [ ] Contenu statique (fichiers css, js, imgs, etc.)
-- [ ] Requêtes et validation des formulaires HTML
-- [ ] Téléchargement/Téléversement des fichiers binaires
-- [ ] Requêtes/Réponses `application/json`
-- [ ] Utilisation des sessions utilisateur
-- [ ] CORS
-- [ ] Configuration
-- [ ] Journalisation
-- [ ] Request filters
-- [ ] Traitement des erreurs
-- [ ] Build et déployement
-
+- [ ] Configuration des nouveaux environnements 
+- [ ] Structure des projets Python et Flask 
+- [ ] Contenu dynamique `text/html` (pages web en utilisant de templates) 
+- [ ] Contenu statique (fichiers css, js, imgs, etc.) 
+- [ ] Requêtes et validation des formulaires HTML 
+- [ ] Téléchargement/Téléversement des fichiers binaires 
+- [ ] Requêtes/Réponses `application/json` 
+- [ ] Utilisation des sessions utilisateur 
+- [ ] CORS 
+- [ ] Configuration 
+- [ ] Journalisation 
+- [ ] Request filters 
+- [ ] Traitement des erreurs 
+- [ ] Build et déploiement 
 
 ## Préparer un nouvel environnement de DEV
 
@@ -36,7 +35,7 @@ Ensuite, exécutez l'installation du projet en mode développement:
 > pip install -e .
 ```
 
-Pour finir, vous pouvez desormais lancer le projet website ou api avec:
+Pour finir, vous pouvez désormais lancer le projet website ou api avec:
 
 ```shell
 > cd musiquepy/website
@@ -48,7 +47,7 @@ Pour finir, vous pouvez desormais lancer le projet website ou api avec:
 > flask run --port 5001
 ```
 
-## Paquet de distribuition
+## Paquet de distribution
 
 Exécutez:
 
