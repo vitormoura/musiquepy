@@ -4,20 +4,22 @@ Projet labo pour explorer le développement des applications web python en utili
 
 ## Des fonctionnalités à explorer
 
-- [ ] Configuration des nouveaux environnements 
-- [ ] Structure des projets Python et Flask 
-- [ ] Contenu dynamique `text/html` (pages web en utilisant de templates) 
-- [ ] Contenu statique (fichiers css, js, imgs, etc.) 
-- [ ] Requêtes et validation des formulaires HTML 
+- [x] Configuration des nouveaux environnements 
+- [x] Structure des projets Python et Flask 
+- [x] Contenu dynamique `text/html` (pages web en utilisant de templates) 
+- [x] Contenu statique (fichiers css, js, imgs, etc.) 
+- [x] Requêtes et validation des formulaires HTML 
 - [ ] Téléchargement/Téléversement des fichiers binaires 
-- [ ] Requêtes/Réponses `application/json` 
-- [ ] Utilisation des sessions utilisateur 
-- [ ] CORS 
+- [x] Requêtes/Réponses `application/json` 
+- [ ] Docs des APIs avec Swagger/OpenAPI
+- [ ] Accès aux bases des données (SQLALCHEMY)
+- [x] Utilisation des sessions utilisateur 
+- [x] CORS 
 - [ ] Configuration 
 - [ ] Journalisation 
 - [ ] Request filters 
 - [ ] Traitement des erreurs 
-- [ ] Build et déploiement 
+- [ ] Build et déploiement (xcopy et Docker images)
 
 ## Préparer un nouvel environnement de DEV
 
