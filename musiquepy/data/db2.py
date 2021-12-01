@@ -30,11 +30,11 @@ class MusiquepyDB2:
     def __init__(self, engine: Engine) -> None:
         self._engine = engine
 
-    def get_users(self):
+    def get_users(self) -> List[User]:
         with Session(self._engine) as session:
             session: Session
             result: ResultProxy
 
             result = session.execute(select(User))
 
-            return result.scalars().fetchall()
+            return [row.User for row in result.fetchall()]
