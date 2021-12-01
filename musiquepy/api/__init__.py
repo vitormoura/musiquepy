@@ -32,11 +32,12 @@ def create_app(test_config=None):
         cors.init_app(app)
 
         # Blueprints
-        from musiquepy.api.routes import echo, catalog, artists
+        from musiquepy.api.routes import echo, catalog, artists, users
 
         app.register_blueprint(echo.bp)
         app.register_blueprint(catalog.bp)
         app.register_blueprint(artists.bp)
+        app.register_blueprint(users.bp)
 
         return app
 
