@@ -4,7 +4,7 @@ from flask import Response
 
 
 def _json_response(json_dump: str, is_success=True, error_status_code=400):
-    
+
     if json_dump is None:
         raise TypeError('json_dump is None')
 
@@ -30,7 +30,11 @@ def _json_response(json_dump: str, is_success=True, error_status_code=400):
     )
 
 
-def json_ok(json_dump: str):
+def json_ok(json_dump: any):
+
+    if json_dump is not None and not isinstance(json_dump, str):
+        json_dump = json.dumps(json_dump)
+    
     return _json_response(json_dump, is_success=True, error_status_code=400)
 
 
