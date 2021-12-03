@@ -1,10 +1,7 @@
-import json
+
 from flask import Blueprint
-
 from musiquepy.api.utils import json_ok
-from musiquepy.data import get_musiquepy_db, get_musiquepy_db2
-from musiquepy.data.schemas import GenericRecordSchema, MusicTrackSchema
-
+from musiquepy.data import get_musiquepy_db2
 
 bp = Blueprint('catalog', __name__, url_prefix='/catalog')
 
@@ -19,9 +16,7 @@ def get_music_genres():
 
 @bp.get('/genres/<int:genre_id>')
 def get_genre_by_id(genre_id: int):
-    with get_musiquepy_db() as db:
-        tracks = db.get_music_tracks_by_genre(genre_id)
-        schema = MusicTrackSchema(many=True)
-        json_dump = schema.dumps(tracks)
+    db = get_musiquepy_db2()
+    tracks = db.get_music_tracks_by_genre(genre_id)
 
-        return json_ok(json_dump)
+    return json_ok([t.to_dict() for t in tracks])

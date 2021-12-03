@@ -33,8 +33,8 @@ def _json_response(json_dump: str, is_success=True, error_status_code=400):
 def json_ok(json_dump: any):
 
     if json_dump is not None and not isinstance(json_dump, str):
-        json_dump = json.dumps(json_dump)
-    
+        json_dump = json.dumps(json_dump, check_circular=True, skipkeys=True)
+
     return _json_response(json_dump, is_success=True, error_status_code=400)
 
 

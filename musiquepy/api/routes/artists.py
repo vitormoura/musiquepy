@@ -1,8 +1,6 @@
 from flask import Blueprint, abort, send_from_directory
-
 from musiquepy.api.utils import json_ok
 from musiquepy.data import get_musiquepy_db2
-from musiquepy.data.schemas import ArtistSchema
 
 bp = Blueprint('artist', __name__, url_prefix='/artists')
 
@@ -14,7 +12,7 @@ def get_artist_by_id(artist_id: int):
 
     if artist is None:
         abort(404)
-    
+
     return json_ok(artist.to_dict())
 
 
