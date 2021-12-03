@@ -33,3 +33,14 @@ def test__get_genres_by_id():
     genre2 = db.get_genre_by_id(999)
 
     assert genre2 == None
+
+def test__get_artist_by_id():
+    db = get_musiquepy_db2()
+    artist = db.get_artist_by_id(1)
+
+    assert artist != None
+    assert artist.id == 1
+
+    artist2 = db.get_artist_by_id(999)    
+
+    assert artist2 == None

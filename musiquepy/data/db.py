@@ -34,7 +34,8 @@ class MusiquepyDB:
 
     def create_user(self, name: str, email: str, password: str) -> User:
         usr = self.get_user_by_email(email)
-
+        
+        
         if usr is not None:
             raise MusiquepyExistingUserError(
                 f"utilisateur existe déjà: {email}")
@@ -44,7 +45,7 @@ class MusiquepyDB:
                     (email, password, name, 0, 1, datetime.now(), None))
 
         self._conn.commit()
-
+    
         user = User()
         user.name = name
         user.mail = email

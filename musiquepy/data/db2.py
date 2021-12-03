@@ -1,11 +1,11 @@
 
 from typing import List
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, select
+
+from sqlalchemy import Boolean, Column, Integer, String, select
 from sqlalchemy.engine import Engine, ResultProxy
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm.session import Session
 from sqlalchemy_serializer import SerializerMixin
-
 
 Base = declarative_base()
 
@@ -29,6 +29,18 @@ class MusicGenre(Base, SerializerMixin):
 
     id = Column(Integer, name='COD_GENRE_MUSIQ', primary_key=True)
     description = Column(String(255), name='DSC_GENRE_MUSIQ')
+
+class Artist(Base, SerializerMixin):
+    __tablename__ = 'CAD_ARTISTES'
+
+    id = Column('SEQ_ARTISTE', Integer, autoincrement=True, primary_key=True)
+    name = Column('NOM_ARTISTE', String(255))
+    code = Column('COD_ARTISTE', String(128))
+    country = Column('COD_PAYS_ORIGINE', Integer)
+    year_activity_start = Column('NUM_ANNEE_DEBUT_ACTIVITE', Integer)
+    year_activity_end = Column('NUM_ANNEE_FIN_ACTIVITE', Integer, nullable=True)
+    website = Column('URL_SITEWEB', String(1024))
+    history = Column('DSC_HISTORIQUE', String(2048))
 
 
 class MusiquepyDB2:
@@ -67,5 +79,12 @@ class MusiquepyDB2:
             session: Session
 
             stmt = select(MusicGenre).where(MusicGenre.id == id)
+
+            return session.execute(stmt).scalar()
+
+    def get_artist_by_id(self, id: int) -> Artist:
+        with Session(self._engine) as session:
+            session: Session
+            stmt = select(Artist).where(Artist.id == id)
 
             return session.execute(stmt).scalar()
