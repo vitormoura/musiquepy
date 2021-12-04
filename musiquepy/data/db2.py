@@ -1,6 +1,11 @@
 
+from datetime import datetime
 from typing import List
 
+from sqlalchemy.sql.expression import false
+from musiquepy.data.errors import MusiquepyExistingUserError
+
+from musiquepy.data.model import Album
 from sqlalchemy import Boolean, Column, Integer, String, select
 from sqlalchemy.engine import Engine, ResultProxy
 from sqlalchemy.orm import declarative_base, relationship
@@ -8,15 +13,16 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.sql.schema import ForeignKey, Table
 from sqlalchemy_serializer import SerializerMixin
 
-from musiquepy.data.model import Album
-
 Base = declarative_base()
 
 
 MusicGenreArtistsRel = Table('CAD_GENRE_MUSIQ_ARTISTE', Base.metadata,
-    Column('COD_GENRE_MUSIQ', ForeignKey('TAB_GENRES_MUSIQ.COD_GENRE_MUSIQ')),
-    Column('COD_ARTISTE', ForeignKey('CAD_ARTISTES.SEQ_ARTISTE'))
-)
+                             Column('COD_GENRE_MUSIQ', ForeignKey(
+                                 'TAB_GENRES_MUSIQ.COD_GENRE_MUSIQ')),
+                             Column('COD_ARTISTE', ForeignKey(
+                                 'CAD_ARTISTES.SEQ_ARTISTE'))
+                             )
+
 
 class User(Base, SerializerMixin):
     __tablename__ = 'CAD_UTILISATEURS'
@@ -38,7 +44,8 @@ class MusicGenre(Base, SerializerMixin):
     id = Column(Integer, name='COD_GENRE_MUSIQ', primary_key=True)
     description = Column(String(255), name='DSC_GENRE_MUSIQ')
 
-    artists = relationship('Artist', secondary=MusicGenreArtistsRel, back_populates='genres')
+    artists = relationship(
+        'Artist', secondary=MusicGenreArtistsRel, back_populates='genres')
 
 
 class Artist(Base, SerializerMixin):
@@ -54,7 +61,8 @@ class Artist(Base, SerializerMixin):
     website = Column('URL_SITEWEB', String(1024))
     history = Column('DSC_HISTORIQUE', String(2048))
 
-    genres = relationship('MusicGenre', secondary=MusicGenreArtistsRel, back_populates='artists')
+    genres = relationship(
+        'MusicGenre', secondary=MusicGenreArtistsRel, back_populates='artists')
 
 
 """
@@ -70,6 +78,7 @@ CREATE TABLE CAD_ALBUM (
     DSC_ALBUM           TEXT(1024)
 );
 """
+
 
 class Album(Base, SerializerMixin):
     __tablename__ = 'CAD_ALBUM'
@@ -87,8 +96,8 @@ class Album(Base, SerializerMixin):
 
 
 class MusicTrack(Base, SerializerMixin):
-    serialize_rules = ('-album.tracks','-album.artist.genres')
-    
+    serialize_rules = ('-album.tracks', '-album.artist.genres')
+
     __tablename__ = "CAD_PISTES_ALBUM"
 
     id = Column('SEQ_PISTE', Integer, primary_key=True, autoincrement=True)
@@ -107,6 +116,31 @@ class MusiquepyDB2:
 
     def __init__(self, engine: Engine) -> None:
         self._engine = engine
+
+    def create_user(self, name: str, email: str, password: str) -> User:
+        usr = self.get_user_by_email(email)
+                
+        if usr is not None:
+            raise MusiquepyExistingUserError(
+                f"utilisateur existe déjà: {email}")
+        
+        with Session(self._engine) as session:
+            session: Session
+            session.expire_on_commit = False
+
+            usr = User()
+            usr.email = email
+            usr.name = name
+            usr.password = password
+            usr.accept_marketing = 0
+            usr.active = 1
+            usr.created_at = int(datetime.now().timestamp())
+            usr.email_confirmed_at = None
+            
+            session.add(usr)
+            session.commit()                        
+        
+        return usr
 
     def get_users(self) -> List[User]:
         with Session(self._engine) as session:
@@ -158,9 +192,7 @@ class MusiquepyDB2:
                 .join(Artist.genres)
                 .where(MusicGenre.id == id_genre)
             )
-            
+
         result = session.execute(stmt)
-        
+
         return [row.MusicTrack for row in result.fetchall()]
-
-

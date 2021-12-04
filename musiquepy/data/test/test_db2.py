@@ -9,6 +9,13 @@ def test__get_genres():
     assert genres != None
     assert len(genres) > 0
 
+def test__create_create_user():
+    db = get_musiquepy_db2()
+    usr = db.create_user('king arthur', 'king_arthur@camelot.com', '123456')
+
+    assert usr is not None
+    assert usr.id > 0
+
 def test__get_user_by_email():
     db = get_musiquepy_db2()
     usr = db.get_user_by_email('mail@mail.com')
