@@ -8,15 +8,15 @@ bp = Blueprint('catalog', __name__, url_prefix='/catalog')
 
 @bp.get('/genres')
 def get_music_genres():
-    db = get_musiquepy_db2()
-    genres = db.get_genres()
+    with get_musiquepy_db2() as db:
+        genres = db.get_genres()
 
-    return json_ok([g.to_dict() for g in genres])
+        return json_ok([g.to_dict(rules=('-artists',)) for g in genres])
 
 
 @bp.get('/genres/<int:genre_id>')
 def get_genre_by_id(genre_id: int):
-    db = get_musiquepy_db2()
-    tracks = db.get_music_tracks_by_genre(genre_id)
+    with get_musiquepy_db2() as db:
+        tracks = db.get_music_tracks_by_genre(genre_id)
 
-    return json_ok([t.to_dict() for t in tracks])
+        return json_ok([t.to_dict() for t in tracks])

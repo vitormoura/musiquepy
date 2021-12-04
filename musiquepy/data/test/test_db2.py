@@ -2,58 +2,64 @@ import pytest
 from musiquepy.data import get_musiquepy_db2
 from musiquepy.data.db2 import MusicTrack
 
-def test__get_genres():
-    db = get_musiquepy_db2()
-    genres = db.get_genres()
 
-    assert genres != None
-    assert len(genres) > 0
+def test__get_genres():
+    with get_musiquepy_db2() as db:
+        genres = db.get_genres()
+
+        assert genres != None
+        assert len(genres) > 0
+
 
 def test__create_create_user():
-    db = get_musiquepy_db2()
-    usr = db.create_user('king arthur', 'king_arthur@camelot.com', '123456')
+    with get_musiquepy_db2() as db:
+        usr = db.create_user(
+            'king arthur', 'king_arthur@camelot.com', '123456')
 
-    assert usr is not None
-    assert usr.id > 0
+        assert usr is not None
+        assert usr.id > 0
+
 
 def test__get_user_by_email():
-    db = get_musiquepy_db2()
-    usr = db.get_user_by_email('mail@mail.com')
+    with get_musiquepy_db2() as db:
+        usr = db.get_user_by_email('mail@mail.com')
 
-    assert usr != None
-    assert usr.email == 'mail@mail.com'
+        assert usr != None
+        assert usr.email == 'mail@mail.com'
 
-    usr2 = db.get_user_by_email('nonexistent@mail.com')
+        usr2 = db.get_user_by_email('nonexistent@mail.com')
 
-    assert usr2 == None
+        assert usr2 == None
+
 
 def test__get_genres_by_id():
-    db = get_musiquepy_db2()
-    genre = db.get_genre_by_id(30)
+    with get_musiquepy_db2() as db:
+        genre = db.get_genre_by_id(30)
 
-    assert genre != None
-    assert len(genre.description) > 0
-    assert genre.id == 30
+        assert genre != None
+        assert len(genre.description) > 0
+        assert genre.id == 30
 
-    genre2 = db.get_genre_by_id(999)
+        genre2 = db.get_genre_by_id(999)
 
-    assert genre2 == None
+        assert genre2 == None
+
 
 def test__get_artist_by_id():
-    db = get_musiquepy_db2()
-    artist = db.get_artist_by_id(1)
+    with get_musiquepy_db2() as db:
+        artist = db.get_artist_by_id(1)
 
-    assert artist != None
-    assert artist.id == 1
+        assert artist != None
+        assert artist.id == 1
 
-    artist2 = db.get_artist_by_id(999)    
+        artist2 = db.get_artist_by_id(999)
 
-    assert artist2 == None
+        assert artist2 == None
+
 
 def test__get_tracks_by_id():
-    db = get_musiquepy_db2()
-    tracks = db.get_music_tracks_by_genre(30)
+    with get_musiquepy_db2() as db:
+        tracks = db.get_music_tracks_by_genre(30)
 
-    assert len(tracks) > 0
-    assert all([isinstance(t, MusicTrack) for t in tracks])    
-    
+        assert len(tracks) > 0
+        assert all([isinstance(t, MusicTrack) for t in tracks])

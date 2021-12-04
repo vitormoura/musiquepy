@@ -2,9 +2,7 @@
 from datetime import datetime
 from typing import List
 
-from sqlalchemy.sql.expression import false
 from musiquepy.data.errors import MusiquepyExistingUserError
-
 from musiquepy.data.model import Album
 from sqlalchemy import Boolean, Column, Integer, String, select
 from sqlalchemy.engine import Engine, ResultProxy
@@ -25,6 +23,8 @@ MusicGenreArtistsRel = Table('CAD_GENRE_MUSIQ_ARTISTE', Base.metadata,
 
 
 class User(Base, SerializerMixin):
+    serialize_rules = ('-password',)
+
     __tablename__ = 'CAD_UTILISATEURS'
 
     id = Column(Integer, name='SEQ_UTILISATEUR',
@@ -49,6 +49,8 @@ class MusicGenre(Base, SerializerMixin):
 
 
 class Artist(Base, SerializerMixin):
+    serialize_rules = ('-genres.artists',)
+
     __tablename__ = 'CAD_ARTISTES'
 
     id = Column('SEQ_ARTISTE', Integer, autoincrement=True, primary_key=True)
@@ -63,21 +65,6 @@ class Artist(Base, SerializerMixin):
 
     genres = relationship(
         'MusicGenre', secondary=MusicGenreArtistsRel, back_populates='artists')
-
-
-"""
--- CAD_ALBUM definition
-
-CREATE TABLE CAD_ALBUM (
-    SEQ_ALBUM           INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    COD_TYPE_ALBUM      INTEGER NOT NULL,
-    COD_ALBUM           TEXT(32) NOT NULL, -- GUID
-    SEQ_ARTISTE         INTEGER NOT NULL,
-    NOM_ALBUM           TEXT(255) NOT NULL,
-    NUM_ANNEE_SORTIE    INTEGER NOT NULL,
-    DSC_ALBUM           TEXT(1024)
-);
-"""
 
 
 class Album(Base, SerializerMixin):
@@ -113,86 +100,88 @@ class MusicTrack(Base, SerializerMixin):
 
 class MusiquepyDB2:
     _engine: Engine
+    _session: Session
 
     def __init__(self, engine: Engine) -> None:
         self._engine = engine
 
+    def connect(self):
+        self._session = Session(self._engine)
+        self._session.expire_on_commit = False
+
+    def close(self):
+        self._session.close()
+
+    def __enter__(self):
+        self.connect()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
     def create_user(self, name: str, email: str, password: str) -> User:
         usr = self.get_user_by_email(email)
-                
+
         if usr is not None:
             raise MusiquepyExistingUserError(
                 f"utilisateur existe déjà: {email}")
-        
-        with Session(self._engine) as session:
-            session: Session
-            session.expire_on_commit = False
 
-            usr = User()
-            usr.email = email
-            usr.name = name
-            usr.password = password
-            usr.accept_marketing = 0
-            usr.active = 1
-            usr.created_at = int(datetime.now().timestamp())
-            usr.email_confirmed_at = None
-            
-            session.add(usr)
-            session.commit()                        
-        
+        usr = User()
+        usr.email = email
+        usr.name = name
+        usr.password = password
+        usr.accept_marketing = 0
+        usr.active = 1
+        usr.created_at = int(datetime.now().timestamp())
+        usr.email_confirmed_at = None
+
+        self._session.add(usr)
+        self._session.commit()
+
         return usr
 
     def get_users(self) -> List[User]:
-        with Session(self._engine) as session:
-            session: Session
-            result: ResultProxy
 
-            result = session.execute(select(User))
+        result: ResultProxy
 
-            return [row.User for row in result.fetchall()]
+        result = self._session.execute(select(User))
+
+        return [row.User for row in result.fetchall()]
 
     def get_user_by_email(self, email) -> User:
-        with Session(self._engine) as session:
-            session: Session
 
-            stmt = select(User).where(User.email == email)
+        stmt = select(User).where(User.email == email)
 
-            return session.execute(stmt).scalar()
+        return self._session.execute(stmt).scalar()
 
     def get_genres(self) -> List[MusicGenre]:
-        with Session(self._engine) as session:
-            session: Session
 
-            stmt = select(MusicGenre).order_by(MusicGenre.description)
+        stmt = select(MusicGenre).order_by(MusicGenre.description)
 
-            return session.execute(stmt).scalars().all()
+        return self._session.execute(stmt).scalars().all()
 
     def get_genre_by_id(self, id: int) -> MusicGenre:
-        with Session(self._engine) as session:
-            session: Session
 
-            stmt = select(MusicGenre).where(MusicGenre.id == id)
+        stmt = select(MusicGenre).where(MusicGenre.id == id)
 
-            return session.execute(stmt).scalar()
+        return self._session.execute(stmt).scalar()
 
     def get_artist_by_id(self, id: int) -> Artist:
-        with Session(self._engine) as session:
-            session: Session
-            stmt = select(Artist).where(Artist.id == id)
 
-            return session.execute(stmt).scalar()
+        stmt = select(Artist).where(Artist.id == id)
+
+        return self._session.execute(stmt).scalar()
 
     def get_music_tracks_by_genre(self, id_genre: int) -> List[MusicTrack]:
-        with Session(self._engine) as session:
 
-            stmt = (
-                select(MusicTrack, Artist, Album)
-                .join(MusicTrack.album)
-                .join(Album.artist)
-                .join(Artist.genres)
-                .where(MusicGenre.id == id_genre)
-            )
+        stmt = (
+            select(MusicTrack, Artist, Album)
+            .join(MusicTrack.album)
+            .join(Album.artist)
+            .join(Artist.genres)
+            .where(MusicGenre.id == id_genre)
+        )
 
-        result = session.execute(stmt)
+        result = self._session.execute(stmt)
 
         return [row.MusicTrack for row in result.fetchall()]
