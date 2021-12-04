@@ -1,5 +1,5 @@
 from typing import List
-from musiquepy.data.model import MusicTrack, GenericRecord
+from musiquepy.data.db2 import Album, MusicTrack
 
 
 class MusicTracksViewModel:
@@ -12,7 +12,7 @@ class MusicTracksViewModel:
     def get_tracks(self):
         return self.tracks
 
-    def get_albums(self) -> List[GenericRecord]:
+    def get_albums(self) -> List[Album]:
         albums = dict()
 
         for track in self.tracks:

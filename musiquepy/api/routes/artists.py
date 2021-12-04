@@ -1,13 +1,13 @@
 from flask import Blueprint, abort, send_from_directory
 from musiquepy.api.utils import json_ok
-from musiquepy.data import get_musiquepy_db2
+from musiquepy.data import get_musiquepy_db
 
 bp = Blueprint('artist', __name__, url_prefix='/artists')
 
 
 @bp.get('/<int:artist_id>/info')
 def get_artist_by_id(artist_id: int):
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         artist = db.get_artist_by_id(artist_id)
 
         if artist is None:

@@ -5,7 +5,7 @@ content %}
 
 
 {% for album in tracks.get_albums() %}
-    <h2>{{album.artist.description}} - {{album.description}}</h2>
+    <h2>{{album.artist.name}} - {{album.name}}</h2>
     
     <ul>
         {% for track in tracks.get_tracks_by_album(album.id) %}

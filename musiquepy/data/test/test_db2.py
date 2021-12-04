@@ -1,10 +1,10 @@
 import pytest
-from musiquepy.data import get_musiquepy_db2
+from musiquepy.data import get_musiquepy_db
 from musiquepy.data.db2 import MusicTrack
 
 
 def test__get_genres():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         genres = db.get_genres()
 
         assert genres != None
@@ -12,7 +12,7 @@ def test__get_genres():
 
 
 def test__create_create_user():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         usr = db.create_user(
             'king arthur', 'king_arthur@camelot.com', '123456')
 
@@ -21,7 +21,7 @@ def test__create_create_user():
 
 
 def test__get_user_by_email():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         usr = db.get_user_by_email('mail@mail.com')
 
         assert usr != None
@@ -33,7 +33,7 @@ def test__get_user_by_email():
 
 
 def test__get_genres_by_id():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         genre = db.get_genre_by_id(30)
 
         assert genre != None
@@ -46,7 +46,7 @@ def test__get_genres_by_id():
 
 
 def test__get_artist_by_id():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         artist = db.get_artist_by_id(1)
 
         assert artist != None
@@ -58,7 +58,7 @@ def test__get_artist_by_id():
 
 
 def test__get_tracks_by_id():
-    with get_musiquepy_db2() as db:
+    with get_musiquepy_db() as db:
         tracks = db.get_music_tracks_by_genre(30)
 
         assert len(tracks) > 0
