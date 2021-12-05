@@ -12,7 +12,7 @@ Projet labo pour explorer le développement des applications web python en utili
 - [ ] Téléchargement/Téléversement des fichiers binaires 
 - [x] Requêtes/Réponses `application/json` 
 - [ ] Docs des APIs avec Swagger/OpenAPI
-- [ ] Accès aux bases des données (SQLALCHEMY)
+- [x] Accès aux bases des données (SQLALCHEMY)
 - [x] Utilisation des sessions utilisateur 
 - [x] CORS 
 - [ ] Configuration 

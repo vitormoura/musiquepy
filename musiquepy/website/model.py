@@ -1,5 +1,5 @@
 from typing import List
-from musiquepy.data.db2 import Album, MusicTrack
+from musiquepy.data.db import Album, MusicTrack
 
 
 class MusicTracksViewModel:

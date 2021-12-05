@@ -1,7 +1,3 @@
-from datetime import datetime
-from typing import List
-
-from musiquepy.data.model import Album
 from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.sql.schema import ForeignKey, Table

@@ -1,11 +1,11 @@
-from logging.config import dictConfig
 import os
+from datetime import datetime
+from logging.config import dictConfig
 
 from flask import Flask
-from flask.helpers import get_root_path
 from flask.templating import render_template
+from flask_assets import Bundle, Environment
 from flask_session import Session
-from flask_assets import Environment, Bundle
 
 assets = Environment()
 sess = Session()
@@ -39,12 +39,15 @@ def create_app(test_config=None):
         _init_assets(app)
 
         # Blueprints
-        from musiquepy.website.routes import auth, home, accounts, catalog
+        from musiquepy.website.routes import accounts, auth, catalog, home
 
         app.register_blueprint(auth.bp)
         app.register_blueprint(home.bp)
         app.register_blueprint(accounts.bp)
         app.register_blueprint(catalog.bp)
+
+        # Template filters
+        _config_template_filters(app)
 
         # Global handlers
         _config_other_handlers(app)
@@ -105,3 +108,11 @@ def _config_other_handlers(app: Flask):
     @app.errorhandler(404)
     def page_error_not_found(err):
         return render_template('_not_found.html')
+
+
+def _config_template_filters(app: Flask):
+    @app.template_filter('tsdatetostr')
+    def _jinja2_filter_timestamp_datetime(timestamp_date:float, fmt=None):
+        dt = datetime.fromtimestamp(timestamp_date)
+        return str(dt)
+        

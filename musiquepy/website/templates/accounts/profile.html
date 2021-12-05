@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+
+{% block title %} Profil utilisateur {% endblock %} 
+
+{% block content %} 
+<article>
+
+    <picture>
+        <img src="{{ url_for('accounts.file_user_profile_picture')}}" width="64" height="64" alt="profil" />
+    </picture>
+
+    <h1>{{ user.name }}</h1>
+    <h4>{{ user.email }}</h4>
+
+    <p>Abonné depuis {{ user.created_at | tsdatetostr }}</p>
+
+</article>
+{% endblock %} 

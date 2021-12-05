@@ -13,4 +13,4 @@ def get_musiquepy_db() -> MusiquepyDB:
     engine = create_engine("sqlite+pysqlite:///" +
                            db_path, echo=True, future=True)
 
-    return MusiquepyDB(engine)
+    return MusiquepyDB(engine)        

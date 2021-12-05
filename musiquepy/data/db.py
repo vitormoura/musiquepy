@@ -1,8 +1,12 @@
+import io
 import logging
+import os
+import pathlib
 from datetime import datetime
 from typing import List
 
 from musiquepy.data.errors import MusiquepyExistingUserError
+from musiquepy.data.media import get_profile_pictures_dir
 from musiquepy.data.model import Album, Artist, MusicGenre, MusicTrack, User
 from sqlalchemy import select
 from sqlalchemy.engine import Engine, ResultProxy
@@ -61,11 +65,26 @@ class MusiquepyDB:
 
         return [row.User for row in result.fetchall()]
 
+    def get_user_by_id(self, id) -> User:
+        stmt = select(User).where(User.id == id)
+
+        return self._session.execute(stmt).scalar()
+
     def get_user_by_email(self, email) -> User:
 
         stmt = select(User).where(User.email == email)
 
         return self._session.execute(stmt).scalar()
+
+    def get_user_profile_picture(self, user_id: int) -> io.IOBase:
+        pictures_path = get_profile_pictures_dir()
+        profile_pic_path = pathlib.Path(
+            pictures_path, f'user_{int(user_id)}.jpg')
+
+        if not profile_pic_path.exists():
+            profile_pic_path = pathlib.Path(pictures_path, 'default.jpg')
+
+        return io.FileIO(os.path.join(pictures_path, 'default.jpg'))
 
     def get_genres(self) -> List[MusicGenre]:
 
@@ -74,7 +93,6 @@ class MusiquepyDB:
         return self._session.execute(stmt).scalars().all()
 
     def get_genre_by_id(self, id: int) -> MusicGenre:
-
         stmt = select(MusicGenre).where(MusicGenre.id == id)
 
         return self._session.execute(stmt).scalar()
