@@ -36,7 +36,7 @@ def create_app(test_config=None):
 
     with app.app_context():
 
-        set_lang('pt')
+        set_lang(app.config.get('APP_DEFAULT_LANG', 'en'))
 
         # Plugins init
         _init_session(app)
