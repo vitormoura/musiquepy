@@ -7,7 +7,7 @@ bp = Blueprint('home', __name__, url_prefix='/')
 
 @bp.route("")
 def page_index():
-    return render_template('home.html', welcome_msg=_('welcome message'))
+    return render_template('home.html')
 
 
 @bp.route("my-music")

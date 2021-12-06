@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: musiquepy.website 1.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-06 17:24-0500\n"
+"POT-Creation-Date: 2021-12-06 17:56-0500\n"
 "PO-Revision-Date: 2021-12-06 17:26-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pt\n"
@@ -19,7 +19,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: musiquepy/website/routes/home.py:10
+#: routes/home.py:10 templates/home.html:5
 msgid "welcome message"
 msgstr "Escutar, isso muda tudo"
+
+#: templates/home.html:8
+#, fuzzy
+msgid "welcome phrase"
+msgstr "Milhões de músicas e podcasts. Nenhum cartão de crédito exigido."
 

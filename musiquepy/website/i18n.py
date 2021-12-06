@@ -4,7 +4,7 @@ import os
 # pybabel extract --input-dirs ./musiquepy/website   -o ./musiquepy/website/messages.pot --project 'musiquepy.website' --version 1.0.0
 # pybabel init -i .\musiquepy\website\messages.pot -d .\musiquepy\website\locales\ -l pt
 # pybabel update -i .\musiquepy\website\messages.pot -d .\musiquepy\website\locales\ -l fr
-# pybabel compile -d .\musiquepy\website\locales\
+# pybabel compile -d .\musiquepy\website\locales\ --use-fuzzy
 
 _locales_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),

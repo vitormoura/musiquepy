@@ -7,7 +7,7 @@ from flask.templating import render_template
 from flask_assets import Bundle, Environment
 from flask_session import Session
 
-from musiquepy.website.i18n import set_lang
+from musiquepy.website.i18n import set_lang, _
 
 assets = Environment()
 sess = Session()
@@ -115,8 +115,11 @@ def _config_other_handlers(app: Flask):
 
 
 def _config_template_filters(app: Flask):
+    @app.context_processor
+    def _jinja2_utility_processor():
+        return {'_': _ }
+
     @app.template_filter('tsdatetostr')
-    def _jinja2_filter_timestamp_datetime(timestamp_date:float, fmt=None):
+    def _jinja2_filter_timestamp_datetime(timestamp_date: float, fmt=None):
         dt = datetime.fromtimestamp(timestamp_date)
         return str(dt)
-        

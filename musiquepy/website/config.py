@@ -5,7 +5,7 @@ basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
 """Flask configuration."""
-APP_DEFAULT_LANG = 'fr'
+APP_DEFAULT_LANG = 'pt'
 FLASK_ENV = environ.get('FLASK_ENV')
 DEBUG = True
 TESTING = False
