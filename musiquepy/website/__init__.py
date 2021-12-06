@@ -7,6 +7,8 @@ from flask.templating import render_template
 from flask_assets import Bundle, Environment
 from flask_session import Session
 
+from musiquepy.website.i18n import set_lang
+
 assets = Environment()
 sess = Session()
 
@@ -33,6 +35,8 @@ def create_app(test_config=None):
         pass
 
     with app.app_context():
+
+        set_lang('pt')
 
         # Plugins init
         _init_session(app)
