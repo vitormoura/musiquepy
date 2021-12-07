@@ -7,12 +7,21 @@ bp = Blueprint('echo', __name__, url_prefix='/echo')
 
 @bp.get('/hello')
 def get_message():
+    """
+    Endpoint retourne un message exemple
+    ---
+    responses:
+      200:
+        description: Le message retourné
+    """
+
     # response text/html
     return 'hello world'
 
 
 @bp.post('/content')
 def post_echo_content():
+
     # response application/json (from dict -> to dict)
 
     content = request.get_json(silent=True)

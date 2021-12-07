@@ -11,10 +11,11 @@ Projet labo pour explorer le développement des applications web python en utili
 - [x] Requêtes et validation des formulaires HTML 
 - [ ] Téléchargement/Téléversement des fichiers binaires 
 - [x] Requêtes/Réponses `application/json` 
-- [ ] Docs des APIs avec Swagger/OpenAPI
+- [x] Docs des APIs avec Swagger/OpenAPI
 - [x] Accès aux bases des données (SQLALCHEMY)
 - [x] Utilisation des sessions utilisateur 
 - [x] CORS 
+- [x] i18n
 - [ ] Configuration 
 - [ ] Journalisation 
 - [ ] Request filters 

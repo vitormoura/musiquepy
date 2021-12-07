@@ -1,4 +1,4 @@
-
+from flasgger import swag_from
 from flask import Blueprint
 from musiquepy.api.utils import json_ok
 from musiquepy.data import get_musiquepy_db
@@ -7,7 +7,9 @@ bp = Blueprint('catalog', __name__, url_prefix='/catalog')
 
 
 @bp.get('/genres')
+@swag_from('specs/get_music_genres.yml')
 def get_music_genres():
+    
     with get_musiquepy_db() as db:
         genres = db.get_genres()
 

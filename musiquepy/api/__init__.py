@@ -1,9 +1,11 @@
 from logging.config import dictConfig
+from flasgger import Swagger
 import os
 
 from flask import Flask
 from flask_cors import CORS
 
+swagger = Swagger()
 cors = CORS()
 
 def create_app(test_config=None):
@@ -30,6 +32,7 @@ def create_app(test_config=None):
 
         # Plugins init
         cors.init_app(app)
+        swagger.init_app(app)
 
         # Blueprints
         from musiquepy.api.routes import echo, catalog, artists, users

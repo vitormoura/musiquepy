@@ -1,0 +1,28 @@
+Récupère la liste de genre musicales
+---
+definitions:
+  ResultEnvelope_MusicGenre:
+    type: object
+    properties:
+      status:
+        type: number
+      is_success:
+        type: boolean
+      result:
+        type: array
+        items:
+          $ref: "#/definitions/MusicGenre"
+      error:
+        type: object
+  MusicGenre:
+    type: object
+    properties:
+      id:
+        type: number
+      description:
+        type: string
+responses:
+  200:
+    description: la liste des genres
+    schema:
+      $ref: "#/definitions/ResultEnvelope_MusicGenre"

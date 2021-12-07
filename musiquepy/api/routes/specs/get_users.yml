@@ -1,0 +1,38 @@
+Récupère la liste des utilisateurs enregistrés
+---
+definitions:
+  ResultEnvelope_Users:
+    type: object
+    properties:
+      status:
+        type: number
+      is_success:
+        type: boolean
+      result:
+        type: array
+        items:
+          $ref: "#/definitions/User"
+      error:
+        type: object
+  User:
+    type: object
+    properties:
+      id:
+        type: number
+      email:
+        type: string
+      name:
+        type: string
+      accept_marketing:
+        type: boolean
+      active:
+        type: boolean
+      created_at:
+        type: string
+      email_confirmed_at:
+        type: string
+responses:
+  200:
+    description: la liste des utilisateurs
+    schema:
+      $ref: "#/definitions/ResultEnvelope_Users"

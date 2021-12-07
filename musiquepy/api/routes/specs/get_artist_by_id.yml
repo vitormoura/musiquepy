@@ -1,0 +1,52 @@
+Récupère les détails sur un tel artiste
+---
+parameters:
+  - name: artist_id
+    in: path
+    type: number
+    required: true
+definitions:
+  ResultEnvelope_Artist:
+    type: object
+    properties:
+      status:
+        type: number
+      is_success:
+        type: boolean
+      result:
+        type: object
+        $ref: "#/definitions/Artist"
+      error:
+        type: object
+  Artist:
+    type: object
+    properties:
+      id:
+        type: number
+      name:
+        type: string
+      code:
+        type: string
+      country:
+        type: number
+      year_activity_start:
+        type: number
+      year_activity_end:
+        type: number
+      website:
+        type: string
+      history:
+        type: string
+      genres:
+        type: array
+        items:
+          $ref: "#/definitions/MusicGenre"
+responses:
+  200:
+    description: les données sur l'artiste
+    schema:
+      $ref: "#/definitions/ResultEnvelope_Artist"
+  404:
+    description: L'artiste n'existe pas
+  400:
+    description: l'identifiant de l'artiste n'est pas valide
