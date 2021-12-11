@@ -12,8 +12,8 @@ setup(
     author_email='mail@mail.com',
     packages=find_packages(),
     scripts=[
-        'bin/run_musiquepy_api',
-        'bin/run_musiquepy_website'
+        './bin/musiquepy_api_run',
+        './bin/musiquepy_website_run'
     ],
     url='http://github.com/vitormoura/musiquepy',
     license='LICENSE',
