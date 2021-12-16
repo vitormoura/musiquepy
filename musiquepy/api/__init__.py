@@ -1,3 +1,4 @@
+from logging import Logger
 from logging.config import dictConfig
 from flasgger import Swagger
 import os
@@ -8,7 +9,8 @@ from flask_cors import CORS
 swagger = Swagger()
 cors = CORS()
 
-def create_app(test_config=None):
+
+def create_app(test_config=None, logger_override: Logger = None):
 
     # configure default logging
     _config_logging()
@@ -21,6 +23,11 @@ def create_app(test_config=None):
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
+
+    # logging
+    if logger_override:
+        app.logger.handlers = logger_override.handlers
+        app.logger.setLevel(logger_override.level)
 
     # ensure the instance folder exists
     try:

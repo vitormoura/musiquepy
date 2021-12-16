@@ -1,0 +1,14 @@
+[Unit]
+Description=Musiquepy application api
+After=network.target
+
+[Service]
+User=stfp60i
+Group=nginx
+WorkingDirectory=/appl/musiquepy
+Environment="PATH=/appl/musiquepy/virtualenv/bin"
+ExecStart=/bin/bash -c 'source /appl/musiquepy/virtualenv/bin/activate; gunicorn -w 3 -b unix:/appl/musiquepy/musiquepy-api.sock --log-level=info musiquepy.api.wsgi:app'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
