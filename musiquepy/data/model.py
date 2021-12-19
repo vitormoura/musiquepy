@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String, BLOB
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.sql.schema import ForeignKey, Table
 from sqlalchemy_serializer import SerializerMixin
@@ -73,6 +73,16 @@ class Album(Base, SerializerMixin):
     artist = relationship(Artist)
     tracks = relationship('MusicTrack', back_populates='album')
 
+class AlbumPhoto(Base):
+    __tablename__ = 'CAD_ALBUM_PHOTO'
+
+    id = Column('SEQ_ALBUM_PHOTO', Integer, autoincrement=True, primary_key=True)
+    album_id = Column('SEQ_ALBUM', Integer, ForeignKey(Album.id))
+    content_type = Column('DSC_MIME_TYPE', String(255))
+    size = Column('NUM_TAILLE', Integer)
+    compressed = Column('FLG_COMPRESSE', Integer)
+    content = Column('BIN_ALBUM_PHOTO', BLOB)
+    
 
 class MusicTrack(Base, SerializerMixin):
     serialize_rules = ('-album.tracks', '-album.artist.genres')

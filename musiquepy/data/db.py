@@ -7,7 +7,7 @@ from typing import List
 
 from musiquepy.data.errors import MusiquepyExistingUserError
 from musiquepy.data.media import get_profile_pictures_dir
-from musiquepy.data.model import Album, Artist, MusicGenre, MusicTrack, User
+from musiquepy.data.model import Album, AlbumPhoto, Artist, MusicGenre, MusicTrack, User
 from sqlalchemy import select
 from sqlalchemy.engine import Engine, ResultProxy
 from sqlalchemy.orm.session import Session
@@ -116,3 +116,8 @@ class MusiquepyDB:
         result = self._session.execute(stmt)
 
         return [row.MusicTrack for row in result.fetchall()]
+
+    def get_album_photo(self, id: int) -> AlbumPhoto:
+        stmt = (select(AlbumPhoto).where(AlbumPhoto.album_id == id))
+
+        return self._session.execute(stmt).scalar()

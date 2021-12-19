@@ -1,7 +1,7 @@
 import pytest
+from sqlalchemy.util.langhelpers import portable_instancemethod
 from musiquepy.data import get_musiquepy_db
-from musiquepy.data.db2 import MusicTrack
-
+from musiquepy.data.db import MusicTrack
 
 def test__get_genres():
     with get_musiquepy_db() as db:
@@ -63,3 +63,11 @@ def test__get_tracks_by_id():
 
         assert len(tracks) > 0
         assert all([isinstance(t, MusicTrack) for t in tracks])
+
+
+def test__get_album_photo():
+    with get_musiquepy_db() as db:
+        photo = db.get_album_photo(1)
+
+        assert photo is not None
+        assert len(photo.content) > 0
