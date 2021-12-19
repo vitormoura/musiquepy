@@ -13,6 +13,8 @@ function App() {
   useEffect(() => {
     client.getMessage().then((resp) => {
       setMessage(resp);
+    }, err => {
+
     });
   }, [client]);
 
