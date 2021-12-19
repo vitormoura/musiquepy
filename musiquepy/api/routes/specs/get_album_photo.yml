@@ -1,0 +1,5 @@
+Récupère la photo d'album 
+---
+responses:
+  200:
+    description: un image   

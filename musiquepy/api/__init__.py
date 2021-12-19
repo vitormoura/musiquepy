@@ -42,12 +42,13 @@ def create_app(test_config=None, logger_override: Logger = None):
         swagger.init_app(app)
 
         # Blueprints
-        from musiquepy.api.routes import echo, catalog, artists, users
+        from musiquepy.api.routes import echo, catalog, artists, users, albums
 
         app.register_blueprint(echo.bp)
         app.register_blueprint(catalog.bp)
         app.register_blueprint(artists.bp)
         app.register_blueprint(users.bp)
+        app.register_blueprint(albums.bp)
 
         return app
 
