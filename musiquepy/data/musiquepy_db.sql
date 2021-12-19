@@ -76,6 +76,14 @@ CREATE TABLE CAD_FAVORIS_UTILISATEUR (
     DTH_AJOUT           INTEGER NOT NULL
 );
 
+CREATE TABLE CAD_ALBUM_PHOTO (
+	SEQ_ALBUM_PHOTO INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	BIN_ALBUM_PHOTO BLOB NOT NULL,
+	NUM_TAILLE INTEGER NOT NULL,
+	DSC_MIME_TYPE TEXT(255),
+	FLG_COMPRESSE INT NOT NULL
+)
+
 --
 -- DATA
 --
@@ -144,8 +152,10 @@ INSERT INTO CAD_GENRE_MUSIQ_ARTISTE (COD_GENRE_MUSIQ,COD_ARTISTE) VALUES
 
 INSERT INTO CAD_ALBUM (COD_TYPE_ALBUM, COD_ALBUM, SEQ_ARTISTE, NOM_ALBUM, NUM_ANNEE_SORTIE, DSC_ALBUM) VALUES 
 	(1, '21b559c4-6de6-4b00-91b1-e22db44db268', 1, 'Abbey Road', 1969, 'Abbey Road is the eleventh studio album by the English rock band the Beatles, released on 26 September 1969 by Apple Records. Named after the location of EMI Studios in London, the cover features the group walking across the streets zebra crossing, an image that became one of the most famous and imitated in popular music. The album''s initially mixed reviews were contrasted by its immediate commercial success, topping record charts in the UK and US. The single "Something" / "Come Together" was released in October and topped the US charts.'),
-	(1, '9aa7f040-7f4e-44d4-a748-7a823bb496d2', 1, 'Yellow Submarine', 1969, 'Yellow Submarine is the tenth studio album by English rock band the Beatles, released on 13 January 1969 in the United States and on 17 January in the United Kingdom. It was issued as the soundtrack to the animated film of the same name, which premiered in London in July 1968. The album contains six songs by the Beatles, including four new songs and the previously released "Yellow Submarine" and "All You Need Is Love". The remainder of the album is a re-recording of the films orchestral soundtrack by the bands producer, George Martin. ');
-	
+	(1, '9aa7f040-7f4e-44d4-a748-7a823bb496d2', 1, 'Yellow Submarine', 1969, 'Yellow Submarine is the tenth studio album by English rock band the Beatles, released on 13 January 1969 in the United States and on 17 January in the United Kingdom. It was issued as the soundtrack to the animated film of the same name, which premiered in London in July 1968. The album contains six songs by the Beatles, including four new songs and the previously released "Yellow Submarine" and "All You Need Is Love". The remainder of the album is a re-recording of the films orchestral soundtrack by the bands producer, George Martin. '),
+	(1, '8229ae99-9d74-45a0-b178-d6b49b6b03fb', 2, 'Queen II', 1974, 'Queen II is the second studio album by the British rock band Queen. It was released on 8 March 1974 by EMI Records in the UK and by Elektra Records in the US.'),
+	(1, '9d4f4180-a1b5-45de-a96c-8d3861a7266b', 2, 'Queen', 1973, 'Queen is the self-titled debut studio album by the British rock band Queen. Released on 13 July 1973 by EMI Records in the UK and by Elektra Records in the US, it was recorded at Trident Studios and De Lane Lea Music Centre, London, with production by Roy Thomas Baker, John Anthony and the band members themselves.');
+
 INSERT INTO CAD_PISTES_ALBUM (SEQ_ALBUM, SEQ_CHANSON, NOM_PISTE, NUM_DURATION_SEC, NUM_ORDRE, NUM_FACE)	VALUES 
 	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '21b559c4-6de6-4b00-91b1-e22db44db268'), NULL, 'Come Together', 258, 1, 1),
 	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '21b559c4-6de6-4b00-91b1-e22db44db268'), NULL, 'Something', 150, 2, 1),
@@ -169,5 +179,25 @@ INSERT INTO CAD_PISTES_ALBUM (SEQ_ALBUM, SEQ_CHANSON, NOM_PISTE, NUM_DURATION_SE
 	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9aa7f040-7f4e-44d4-a748-7a823bb496d2'), NULL, 'Pepperland Laid Waste', 129, 6, 2),
 	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9aa7f040-7f4e-44d4-a748-7a823bb496d2'), NULL, 'Yellow Submarine in Pepperland', 130, 7, 2);
 	
-	
-	
+INSERT INTO  CAD_PISTES_ALBUM (SEQ_ALBUM, SEQ_CHANSON, NOM_PISTE, NUM_DURATION_SEC, NUM_ORDRE, NUM_FACE) VALUES 
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Procession', 71, 1, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Father to Son', 371, 2, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'White Queen (As It Began)', 271, 3, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Some Day One Day', 260, 4, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'The Loser in the End', 240, 5, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Ogre Battle', 246, 1, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'The Fairy Feller''s Master-Stroke', 160, 2, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Funny How Love Is', 77, 3, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '8229ae99-9d74-45a0-b178-d6b49b6b03fb'), NULL, 'Seven Seas of Rhye', 391, 4, 2);
+
+INSERT INTO  CAD_PISTES_ALBUM (SEQ_ALBUM, SEQ_CHANSON, NOM_PISTE, NUM_DURATION_SEC, NUM_ORDRE, NUM_FACE) VALUES 
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Keep Yourself Alive', 223, 1, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Doing All Right', 247, 2, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Great King Rat', 342, 3, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'My Fairy King', 246, 4, 1),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Liar', 382, 1, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'The Night Comes Down', 262, 2, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Modern Times Rock ''n'' Roll', 107, 3, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Son and Daughter', 198, 4, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Jesus', 223, 5, 2),
+	((SELECT SEQ_ALBUM FROM CAD_ALBUM ca WHERE COD_ALBUM  = '9d4f4180-a1b5-45de-a96c-8d3861a7266b'), NULL, 'Seven Seas of Rhye', 75, 6, 2);
