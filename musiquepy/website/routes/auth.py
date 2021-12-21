@@ -1,7 +1,9 @@
 import functools
 
 from flask import (
-    Blueprint, g, request, session, render_template, redirect, url_for, abort, make_response
+    Blueprint, g, request, session,
+    render_template,
+    redirect, url_for, abort, make_response
 )
 from werkzeug.security import check_password_hash
 from musiquepy.website.forms import FormLogin

@@ -9,7 +9,6 @@ bp = Blueprint('artist', __name__, url_prefix='/artists')
 @bp.get('/<int:artist_id>/info')
 @swag_from('specs/get_artist_by_id.yml')
 def get_artist_by_id(artist_id: int):
-    
     with get_musiquepy_db() as db:
         artist = db.get_artist_by_id(artist_id)
 

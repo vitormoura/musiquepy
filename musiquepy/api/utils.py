@@ -1,5 +1,4 @@
 import json
-from os import error
 from flask import Response
 
 
@@ -39,8 +38,10 @@ def json_ok(json_dump: any):
 
 
 def json_badrequest(details_msg: str):
-    return _json_response(json.dumps(details_msg), is_success=False, error_status_code=400)
+    return _json_response(
+        json.dumps(details_msg), is_success=False, error_status_code=400)
 
 
 def json_error(details_msg: str):
-    return _json_response(json.dumps(details_msg), is_success=False, error_status_code=500)
+    return _json_response(
+        json.dumps(details_msg), is_success=False, error_status_code=500)

@@ -9,5 +9,6 @@
     "**/.flask_session": true,
     "**/build": true,
     "bin": false
-  }
+  },
+  "cornflakes.linter.executablePath": ".virtualenv/scripts/flake8"
 }

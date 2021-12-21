@@ -1,4 +1,4 @@
-from flask import abort, Blueprint, render_template, request, session
+from flask import abort, Blueprint, render_template
 
 from musiquepy.website.model import MusicTracksViewModel
 from musiquepy.data import get_musiquepy_db
@@ -37,4 +37,7 @@ def page_music_by_genre(id: int):
 
         tracks = db.get_music_tracks_by_genre(genre.id)
 
-        return render_template('catalog/music_by_genre.html', id=id, genre=genre, tracks=MusicTracksViewModel(tracks))
+        return render_template(
+            'catalog/music_by_genre.html',
+            id=id, genre=genre, tracks=MusicTracksViewModel(tracks)
+        )

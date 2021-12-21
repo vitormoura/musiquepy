@@ -7,7 +7,8 @@ from typing import List
 
 from musiquepy.data.errors import MusiquepyExistingUserError
 from musiquepy.data.media import get_profile_pictures_dir
-from musiquepy.data.model import Album, AlbumPhoto, Artist, MusicGenre, MusicTrack, User
+from musiquepy.data.model import (
+    Album, AlbumPhoto, Artist, MusicGenre, MusicTrack, User)
 from sqlalchemy import select
 from sqlalchemy.engine import Engine, ResultProxy
 from sqlalchemy.orm.session import Session
